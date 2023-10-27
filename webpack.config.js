@@ -1,4 +1,5 @@
 const path = require('path');
+const htmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -28,7 +29,13 @@ module.exports = {
             test: /\.xml$/i,
             use: ['xml-loader'],
         },
-    
     ],
   },
+  plugins: [
+    new htmlWebPackPlugin({
+        template: './src/index.html',
+        filename: 'index.html',
+        inject: 'head',
+    }),
+  ],
 };
