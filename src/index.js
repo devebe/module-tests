@@ -1,4 +1,3 @@
-import idGetter from "./idgetter";
+import add from "./calc";
 
-const helloWorld = idGetter('helloWorld');
-helloWorld.textContent = 'Hello World!';
+console.log(add(5,4));
