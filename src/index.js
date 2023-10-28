@@ -5,7 +5,7 @@ import Skepta from './skepta.jpg';
 console.log(add(5,4));
 
 const body = document.querySelector('body');
-body.textContent = "Meridian Man";
+body.textContent = "Meridian Man Skepta";
 
 const element = document.createElement('div');
 const myImage = new Image();
