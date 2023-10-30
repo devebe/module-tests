@@ -3,7 +3,18 @@ Get everything ready and working with npm and webpack
 run the following for starting up with npm:     npm init -y
 run the following for starting up webpack:      npm install webpack webpack-cli --save-dev
 
+Install HTML plugin for webpack:                npm install --save-dev html-webpack-plugin
+Install webpack-merge for webpack:              npm install --save-dev webpack-merge
+Install webpack-dev-server for webpack:         npm install --save-dev webpack-dev-server
+
+Create folder structure
+___________________________________________________
+
+dist for bundling assets, nothing needs to be there
+src for building your assets, such as js, html etc.
+
 Create webpack.common.js
+___________________________________________________
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -41,6 +52,7 @@ module.exports = {
 };
 
 Create webpack.dev.js
+___________________________________________________
 
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -54,24 +66,26 @@ module.exports = merge(common, {
 });
 
 Create webpack.prod.js
+___________________________________________________
 
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.js');
 
+module.exports = merge(common, {
+  mode: 'production',
+  devtool: 'source-map',
+});
 
 Inclusions to package.json:
+___________________________________________________
 include in scripts:
 "watch": "webpack --watch"
 "start": "webpack --webpack.dev.js"
 "build": "webpack --webpack.prod.js"
 
-Install HTML plugin for webpack:                npm install --save-dev html-webpack-plugin
-
-
-
-Create folder structure
-dist for bundling assets, nothing needs to be there
-src for building your assets, such as js, html etc.
-
 Loading CSS:
+___________________________________________________
+
 npm install --save-dev style-loader css-loader
 
 Add the following to the webpack.common.js:
@@ -86,6 +100,8 @@ module: {
   },
 
 Loading Images:
+___________________________________________________
+
 add to module rules section:
 
 {
@@ -94,6 +110,7 @@ add to module rules section:
 },
 
 Loading Fonts:
+___________________________________________________
 add to module rules section:
 
 {
