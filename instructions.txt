@@ -1,0 +1,111 @@
+Get everything ready and working with npm and webpack
+
+run the following for starting up with npm:     npm init -y
+run the following for starting up webpack:      npm install webpack webpack-cli --save-dev
+
+Create webpack.common.js
+
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: {
+    app: './src/index.js',
+  },
+  module: {
+    rules: [
+        {
+            test: /\.css$/i,
+            use: ['style-loader', 'css-loader'],
+        },
+        {
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            type: 'asset/resource',
+        },
+        {
+            test: /\.(woff|woff2|eot|ttf|otf)$/i,
+            type: 'asset/resource',
+        },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Production',
+    }),
+  ],
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+};
+
+Create webpack.dev.js
+
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.js');
+
+module.exports = merge(common, {
+  mode: 'development',
+  devtool: 'inline-source-map',
+  devServer: {
+    static: './dist',
+  },
+});
+
+Create webpack.prod.js
+
+
+
+Inclusions to package.json:
+include in scripts:
+"watch": "webpack --watch"
+"start": "webpack --webpack.dev.js"
+"build": "webpack --webpack.prod.js"
+
+Install HTML plugin for webpack:                npm install --save-dev html-webpack-plugin
+
+
+
+Create folder structure
+dist for bundling assets, nothing needs to be there
+src for building your assets, such as js, html etc.
+
+Loading CSS:
+npm install --save-dev style-loader css-loader
+
+Add the following to the webpack.common.js:
+
+module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+
+Loading Images:
+add to module rules section:
+
+{
+    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+    type: 'asset/resource',
+},
+
+Loading Fonts:
+add to module rules section:
+
+{
+    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+    type: 'asset/resource',
+},
+
+add to css in src file
+@font-face {
+  font-family: 'MyFont';
+  src: url('./my-font.woff2') format('woff2'),
+    url('./my-font.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
